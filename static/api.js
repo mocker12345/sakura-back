@@ -5,7 +5,10 @@ var api = new webRest([
   'POST /article',
   'PUT /article/:id',
   'GET /category',
-  'GET /category/:categoryId/articles'
+  'GET /category/:categoryId/articles',
+  'POST /category',
+  'PUT /category/:categoryId',
+  'DELETE /category/:categoryId'
 ],{
   // host:'http://0.0.0.0:8000/',
   host:'http://180.76.132.102:19991/',
@@ -35,7 +38,6 @@ var api = new webRest([
     if (request.data instanceof FormData) {
       delete parmas.headers
     }
-
 
     return fetch(request.path,parmas);
 

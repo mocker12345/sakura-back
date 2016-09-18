@@ -50,7 +50,7 @@ export default {
 			categorys:null,
 			articles:null,
 			totalPage:null,
-			limit:5,
+			limit:15,
 			offset:1
 		}
 	},
@@ -60,7 +60,6 @@ export default {
 
 	ready(){
 		this.getCategorys().then((data)=>{
-			debugger;
 			this.categorys = data.data;
 			this.loadArticlesByCategory();
 		})
@@ -68,7 +67,6 @@ export default {
 	},
 	methods:{
 		loadArticlesByCategory(){
-			debugger;
 			if(this.selected == -1){
 				this.getAllArticles().then((data)=>{
 					this.articles = data.data;

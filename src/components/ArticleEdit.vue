@@ -110,6 +110,8 @@ export default {
 											}
 
 										}
+									}else {
+										self.relations = []
 									}
 								})
 							})
@@ -189,13 +191,11 @@ export default {
 			if(this.$route.params.articleId){
 
 				api.article(this.$route.params.articleId).put(params).then((info)=>{
-					debugger;
 					if (info.ok){
 						info.json().then((data)=>{
-							debugger;
 							$('.upload-modal').modal('hide')
+							debugger;
 							if(data.success){
-								debugger;
 								self.$route.router.go({path:'/article/list'})
 							}
 						})
@@ -203,12 +203,10 @@ export default {
 				})
 			}else {
 				api.article.post(params).then((info)=>{
-					debugger;
 					if (info.ok){
 						info.json().then((data)=>{
-							debugger;
 							$('.upload-modal').modal('hide')
-							if(info.success){
+							if(data.success){
 								self.$route.router.go({path:'/article/list'})
 							}
 						})

@@ -6,7 +6,7 @@
 				<a class="nav-link" v-link="{path:'/article/list'}">article<span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" v-link="{path:'/categoy'}">category</a>
+				<a class="nav-link" v-link="{path:'/category'}">category</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" v-link="{path:'/commodity'}">commodity</a>
