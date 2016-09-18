@@ -26,27 +26,6 @@ var api = new webRest([
       }
       delete request.data;
     }
-    // function ajax(method, url, data) {
-    //   var request = new XMLHttpRequest();
-    //
-    //   return new Promise(function (resolve, reject) {
-    //     request.onreadystatechange = function () {
-    //       if (request.readyState === 4) {
-    //         if (request.status === 200) {
-    //           resolve(JSON.parse(request.responseText));
-    //         } else {
-    //           reject(JSON.parse(request.responseText));
-    //         }
-    //       }
-    //     };
-    //     request.open(method, url);
-    //     if () {
-    //       request.setRequestHeader('Content-Type','application/json');
-    //     }
-    //     request.send(data);
-    //
-    //   });
-    // }
     var headers = {'Content-Type':'application/json'}
     var parmas = {
       method:request.method,

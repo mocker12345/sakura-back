@@ -116,7 +116,8 @@ export default {
 						}
 					})
 			})
-		}
+		},
+		canReuse:false
 	},
 	data(){
 		return {

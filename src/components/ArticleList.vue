@@ -68,7 +68,8 @@ export default {
 	},
 	methods:{
 		loadArticlesByCategory(){
-			if(this.selected === -1){
+			debugger;
+			if(this.selected == -1){
 				this.getAllArticles().then((data)=>{
 					this.articles = data.data;
 					this.totalPage = data.total_page;
@@ -102,11 +103,7 @@ export default {
 		},
 		categoryChange(){
 			this.offset = 1;
-			this.loadArticlesByCategory().then((data)=>{
-				if(data.ok){
-					return data.json()
-				}
-			})
+			this.loadArticlesByCategory()
 
 		},
 	},
