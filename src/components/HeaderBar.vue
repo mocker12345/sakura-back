@@ -16,7 +16,10 @@
 </template>
 <script>
 	export default {
-  		name:'HeaderBar'
+  		name:'HeaderBar',
+			ready(){
+
+			}
   	}
 
 </script>
