@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
+    "fetch-intercept": "^2.2.1",
     "qiniu": "^6.1.11",
     "qiniu-js": "^1.0.14-beta",
     "vc-modal": "^0.0.2",
     "vue": "^1.0.21",
     "vue-bootstrap-modal": "^0.1.13",
     "vue-router": "^0.7.13",
-    "wangeditor": "^2.1.19"
+    "wangeditor": "^2.1.19",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

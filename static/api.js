@@ -8,7 +8,8 @@ var api = new webRest([
   'GET /category/:categoryId/articles',
   'POST /category',
   'PUT /category/:categoryId',
-  'DELETE /category/:categoryId'
+  'DELETE /category/:categoryId',
+  'POST /login'
 ],{
   // host:'http://0.0.0.0:8000/',
   host:'http://180.76.132.102:19991/',
