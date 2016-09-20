@@ -30,7 +30,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import MessageBox from 'vue-msgbox'
 import Pagination from './Pagination'
@@ -59,7 +58,6 @@ export default {
           })
         }
       })
-
     },
     deleteComm(item){
       api.commodity(item.id).delete().then((info)=>{
@@ -72,7 +70,6 @@ export default {
               }).then((action)=>{
                 this.loadCommoditys();
               })
-
             }else {
               MessageBox({
                 message: "Delete field",
@@ -94,11 +91,9 @@ export default {
   }
 };
 </script>
-
 <style>
 @import '../../node_modules/vue-msgbox/lib/vue-msgbox.css';
 .msgbox {
   width: 20%
 }
-
 </style>

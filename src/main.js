@@ -56,12 +56,15 @@ router.beforeEach(function () {
 router.start(App, 'app')
 
 const getAuthHeader = (url, method,access_token,mac_key,nonce)=>{
+  debugger;
   var strAuth = "MAC id=\"" + access_token + "\",nonce=\"";
   strAuth += nonce + "\",mac=\"";
   var i = url.indexOf('/',7);
-  var host = "180.76.132.102:19991";
-  var path = url.substring(i);
-  path=path.replace("/"+host,"");
+  var host = "0.0.0.0:8000";
+  // var path = url.substring(i);
+  //
+  // path=path.replace("/"+host,"");
+  var path = "/commodity"
   var request_content = nonce + '\n' + method + '\n' + path + '\n' +host+'\n';
   var hash = CryptoJS.HmacSHA256(request_content, mac_key);
   var mac = hash.toString(CryptoJS.enc.Base64);strAuth += mac+"\"";
@@ -100,9 +103,11 @@ const unregister = fetchIntercept.register({
       // config.headers['Authorization'] =
       var uc_arr=authCookie.split("$$");
       var stimes = uc_arr[4];
-      var timestamp=new Date().getTime()+parseInt(stimes);
+      debugger;
+      var timestamp=new Date().getTime()+parseInt(stimes)
       var nonce=timestamp+":"+generateMixed(8);
       var access_token=uc_arr[0];
+      debugger;
       var mac_key=uc_arr[2];
       var header = getAuthHeader(url, config.method,access_token,mac_key,nonce)
       if(config.headers){
@@ -122,6 +127,7 @@ const unregister = fetchIntercept.register({
   },
 
   response: function (response) {
+    debugger;
     // Modify the reponse object
     return response;
   },

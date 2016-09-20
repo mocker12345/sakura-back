@@ -51,11 +51,16 @@ export default {
         if(info.ok){
           info.json().then((data)=>{
             debugger;
-            var timestamp=new Date().getTime();
-						var stimes=new Date(data.server_time).valueOf()-timestamp;
-            var cookieVal = data.access_token+"$$"+data.refresh_token+"$$"+data.mac_key+"$$"+data.user_id+"$$"+stimes;
-            this.setCookie('login_access',cookieVal,0.5)
-            alert('123')
+            if(data.message){
+              alert(data.message)
+            }else {
+              var timestamp=new Date().getTime();
+  						var stimes=new Date(data.server_time).valueOf()-timestamp
+              var cookieVal = data.access_token+"$$"+data.refresh_token+"$$"+data.mac_key+"$$"+data.user_id+"$$"+stimes;
+              this.setCookie('login_access',cookieVal,0.5)
+              alert('登陆成功')
+            }
+
           },(error)=>{
             alert(error.message);
           })
