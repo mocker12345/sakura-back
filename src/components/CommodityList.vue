@@ -10,7 +10,7 @@
             price
           </th>
           <th>
-            <button type="button" class="btn btn-primary">add</button>
+            <button type="button" class="btn btn-primary" v-link="{path:'/commodity/add'}">add</button>
           </th>
         </tr>
       </thead>
@@ -19,31 +19,74 @@
           <td v-text="item.title"></td>
           <td v-text="item.price"></td>
           <td>
-            <button type="button" class="btn btn-primary">edit</button>
-            <button type="button" class="btn btn-warning">delete</button>
+            <button type="button" class="btn btn-primary" v-link="{path:'/commodity/edit/'+item.id}">edit</button>
+            <button type="button" class="btn btn-warning" @click="deleteComm(item)">delete</button>
           </td>
         </tr>
       </tbody>
     </table>
     <div class="page">
-      <pagination></pagination>
+      <pagination :offset.sync="offset" :total-page="totalPage"></pagination>
     </div>
   </div>
 </template>
 
 <script>
+import MessageBox from 'vue-msgbox'
 import Pagination from './Pagination'
 export default {
   data() {
     return {
+      limit:12,
+      offset:1,
+      totalPage:null,
+      commoditys:[]
     };
   },
   computed: {},
-  ready() {},
+  ready() {
+    this.loadCommoditys()
+  },
   attached() {},
   methods: {
     loadCommoditys(){
-      
+      var params = {limit:this.limit,offset:this.offset};
+      api.commodity.get(params).then((info)=>{
+        if(info.ok){
+          info.json().then((data)=>{
+            this.totalPage = data.total_page;
+            this.commoditys = data.data;
+          })
+        }
+      })
+
+    },
+    deleteComm(item){
+      api.commodity(item.id).delete().then((info)=>{
+        if(info.ok){
+          info.json().then((data)=>{
+            if(data.success){
+              MessageBox({
+                message: "Delete success",
+                type: 'success',
+              }).then((action)=>{
+                this.loadCommoditys();
+              })
+
+            }else {
+              MessageBox({
+                message: "Delete field",
+                type: 'error',
+              })
+            }
+          })
+        }
+      })
+    }
+  },
+  watch:{
+    'offset':function(){
+      this.loadCommoditys()
     }
   },
   components: {
@@ -52,5 +95,10 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style>
+@import '../../node_modules/vue-msgbox/lib/vue-msgbox.css';
+.msgbox {
+  width: 20%
+}
+
 </style>

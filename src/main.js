@@ -6,6 +6,8 @@ import ArticleView from './components/ArticleView.vue'
 import ArticleEdit from './components/ArticleEdit.vue'
 import categoryView from './components/categoryView.vue'
 import login from './components/login.vue'
+import CommodityList from './components/commodityList'
+import CommodityEdit from './components/commodityEdit'
 import 'whatwg-fetch'
 import fetchIntercept from 'fetch-intercept'
 Vue.use(Router)
@@ -30,6 +32,15 @@ router.map({
   },
   '/login':{
     component:login
+  },
+  '/commodity':{
+    component:CommodityList
+  },
+  '/commodity/add':{
+    component:CommodityEdit
+  },
+  '/commodity/edit/:id':{
+    component:CommodityEdit
   }
 
 })
@@ -80,13 +91,12 @@ const unregister = fetchIntercept.register({
   request: function (url, config) {
     // Modify the url or config here
     var host = '180.76.132.102:19991';
+    debugger;
 
     var authCookie = getCookie('login_access')
-    debugger;
     if(authCookie == undefined){
       router.go('/login')
     }else {
-      debugger;
       // config.headers['Authorization'] =
       var uc_arr=authCookie.split("$$");
       var stimes = uc_arr[4];
@@ -95,8 +105,12 @@ const unregister = fetchIntercept.register({
       var access_token=uc_arr[0];
       var mac_key=uc_arr[2];
       var header = getAuthHeader(url, config.method,access_token,mac_key,nonce)
-      debugger;
-      config.headers['Authorization'] = header
+      if(config.headers){
+        config.headers['Authorization'] = header
+      }else {
+        config['headers']={'Authorization':header}
+      }
+
     }
 
     return [url, config];

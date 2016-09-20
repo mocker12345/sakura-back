@@ -18,12 +18,7 @@ export default {
   components: {
     HeaderBar
   },
-  // route:{
-	// 	canReuse: function (transition) {
-  //     return false
-  //   }
-  //
-	// },
+
 }
 </script>
 
@@ -31,7 +26,6 @@ export default {
 html {
   height: 100%;
 }
-
 
 #app {
   color: #2c3e50;

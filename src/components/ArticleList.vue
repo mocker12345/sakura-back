@@ -1,7 +1,11 @@
 <template>
+	<header>
+		<h4>ARTICLE LIST</h4>
+	</header>
 	<div class="row">
-		<div class="col-md-4">
-			<select v-model="selected" class="form-control" @change="categoryChange">
+		<div class="category form-group col-md-4">
+			<label class="label">Category</label>
+			<select v-model="selected" class="form-control" @change="categoryChange" style="vertical-align:middle">
 				<option value="-1">全部</option>
 				<option value="0">其他</option>
 				<option v-for="category in categorys" v-bind:value="category.id">{{category.name}}</option>
@@ -39,11 +43,6 @@
 import Pagination from './Pagination'
 export default {
 	name:'ArticleList',
-	route:{
-		data(){
-			debugger;
-		}
-	},
 	data(){
 		return {
 			selected:-1,
@@ -114,6 +113,15 @@ export default {
 
 </script>
 <style>
+
+.label {
+	width:100px!important;
+	font-size:18px
+}
+.category {
+	float:right;
+	margin-bottom: 10px
+}
 .page {
 	text-align:center;
 }

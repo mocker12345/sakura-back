@@ -1,6 +1,5 @@
 <template>
 	<div class="container">
-		<a class="btn btn-primary" v-link="{path:'/article/list'}">返回列表</a>
 		<form>
 			<div class="form-group">
 				<label class="label">Title</label>

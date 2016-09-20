@@ -22,7 +22,7 @@ export default {
   name:'Pagination',
   data() {
     return {
-      
+
     }
   },
   props:['offset','totalPage'],
@@ -40,6 +40,7 @@ export default {
        }
      },
      next(){
+       debugger;
        if(this.offset === this.totalPage){
          alert('已经是最后一页了！')
        }else {
