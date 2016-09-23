@@ -44,7 +44,7 @@ export default {
       }
     },
     next(){
-      ;
+      debugger;
       if(this.offset === this.totalPage){
         MessageBox({
           message: "已经是最后一页了",

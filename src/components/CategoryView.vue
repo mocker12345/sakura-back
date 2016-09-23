@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="container">
     <header>
-      <h4>CATEGORY LIST</h4>
+      <h5>CATEGORY LIST</h5>
     </header>
     <table class="table">
       <thead>

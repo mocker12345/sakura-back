@@ -1,6 +1,6 @@
 <template>
 	<header>
-		<h4>ARTICLE LIST</h4>
+		<h5>ARTICLE LIST</h5>
 	</header>
 	<div class="row">
 		<div class="category form-group col-md-4">

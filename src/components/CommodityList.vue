@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="container">
     <header>
-      <h4>COMMODITY LIST</h4>
+      <h5>COMMODITY LIST</h5>
     </header>
     <table class="table">
       <thead>

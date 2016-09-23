@@ -7,7 +7,7 @@
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>
       </button>
-      <h4 class="modal-title">选择关联文章</h4>
+      <h5 class="modal-title">选择关联文章</h5>
     </div> -->
     <div class="modal-body">
       <table class="table">

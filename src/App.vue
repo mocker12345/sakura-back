@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header-bar :is-login.sync="isLogin"></header-bar>
+    <header-bar></header-bar>
     <!-- <hello></hello> -->
 
     <router-view
@@ -8,8 +8,8 @@
       transition
       transition-mode="out-in">
     </router-view>
-
-  </div>
+  
+</div>
 </template>
 
 <script>
@@ -20,12 +20,6 @@ export default {
   },
   data(){
     return {
-      isLogin:false
-    }
-  },
-  events:{
-    'login_down':function(){
-      this.isLogin = true
     }
   }
 

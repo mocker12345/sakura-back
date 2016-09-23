@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<header>
-			<h4>EDIT ARTICLE</h4>
+			<h5>EDIT ARTICLE</h5>
 		</header>
 		<form>
 			<div class="form-group">
