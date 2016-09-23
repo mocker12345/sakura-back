@@ -229,7 +229,7 @@ export default {
 				})
 			}else {
 				api.article.post(params).then((info)=>{
-					;
+					
 					if (info.ok){
 						info.json().then((data)=>{
 							if (data.code === 400) {

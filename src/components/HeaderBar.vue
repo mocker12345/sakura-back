@@ -1,7 +1,9 @@
 <template>
-	<nav class="navbar navbar-light bg-faded">
-		<a class="navbar-brand" v-link="{path:'/article/list'}">Sakura</a>
-		<ul class="nav navbar-nav">
+	<nav class="navbar navbar-light bg">
+		<a class="navbar-brand" v-link="{path:'/article/list'}">
+			<img src="../assets/logo.png">
+		</a>
+		<ul class="nav navbar-nav" style="margin-top: 0.8rem;font-size:1.2rem">
 			<li class="nav-item" v-link-active>
 				<a class="nav-link" v-link="{path:'/article/list',activeClass:'active'}">article<span class="sr-only">(current)</span></a>
 			</li>
@@ -27,7 +29,7 @@ export default {
 	},
 	methods:{
 		makeActive(num){
-			;
+
 			this.isActive = num
 			this.$route.router
 		},
@@ -43,5 +45,12 @@ export default {
 
 </script>
 <style>
+.bg{
+	background-color: #475669;
+}
+.active {
+	color: #000!important;
+}
+
 
 </style>
