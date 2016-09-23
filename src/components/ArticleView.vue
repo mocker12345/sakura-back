@@ -1,24 +1,22 @@
 <template>
 	<div class="container">
 		<article-list><article-list>
-		<!-- <article-edit></article-edit> -->
-	</div>
+			<!-- <article-edit></article-edit> -->
+		</div>
 
-</template>
-<script>
-import ArticleList from './ArticleList'
-import ArticleEdit from './ArticleEdit'
-export default {
-  	name:'ArticleView',
-  	components: {
-    	ArticleList,
-			ArticleEdit
-  	},
-}
+	</template>
+	<script>
+	import ArticleList from './ArticleList'
+	export default {
+		name:'ArticleView',
+		components: {
+			ArticleList
+		},
+	}
 
-</script>
-<style>
-.container {
-	padding: 20px;
-}
-</style>
+	</script>
+	<style>
+	.container {
+		padding: 20px;
+	}
+	</style>

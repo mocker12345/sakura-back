@@ -116,7 +116,7 @@
      * @returns {Function}
      */
      Tree.prototype.buildMethod = function (method) {
-        // debugger;
+        // ;
         var node = this;
         return function (data) {
             var what = node.getPath();
@@ -136,7 +136,7 @@
      * @returns {handler}
      */
     Tree.prototype.loadRawTree = function (rawTree) {
-        // debugger;
+        // ;
         // console.log(rawTree);
         var that = this;
         var rawSubTree = rawTree['#rawSubTree'] || {};

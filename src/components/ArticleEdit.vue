@@ -1,5 +1,8 @@
 <template>
 	<div class="container">
+		<header>
+			<h4>EDIT ARTICLE</h4>
+		</header>
 		<form>
 			<div class="form-group">
 				<label class="label">Title</label>
@@ -38,7 +41,7 @@
 					<p v-for="item in relations" v-text="item.title"></p>
 					<a href="javascript:;">select article</a>
 				</div>
-				<article-modal v-ref:modal :articles.sync="articles" :relations.sync="relations"></article-modal>
+				<article-modal v-ref:modal :articles.sync="articles" :relations.sync="relations" :article-id="articleId"></article-modal>
 			</div>
 			<div class="price-box">
 				<label class="label">Price</label>
@@ -68,7 +71,7 @@
 			<fieldset class="form-group">
 				<label class="label">Content</label>
 				<div id="editor-container">
-					<div id="editor" style="min-height:800px" v-text="articleEdit.content"></div>
+					<div id="editor" style="min-height:800px" v-html="articleEdit.content"></div>
 				</div>
 			</fieldset>
 			<button type="button" class="btn btn-primary" @click="saveEdit">Submit</button>
@@ -79,6 +82,7 @@
 import wangEditor from "wangeditor"
 import ArticleModal from "./ArticleModal"
 import Vue from 'vue'
+import MessageBox from "vue-msgbox"
 var editor;
 export default {
 	name:'ArticleEdit',
@@ -86,42 +90,43 @@ export default {
 		data(){
 			let self = this;
 			this.loadArticle().then((data)=>{
-					self.articles = data.data;
+				self.articles = data.data;
 
-					for (let i = 0; i < self.articles.length; i++) {
-						Vue.set(self.articles[i],'selected',false)
-					}
-					self.getCategory().then((data)=>{
-						self.categorys = data.data;
-						if(self.$route.params.articleId){
-							let articleId = self.$route.params.articleId;
-							api.article(articleId).get().then((data)=>{
-								data.json().then((data)=>{
-									self.articleEdit = data;
-									if(self.articleEdit.children && (self.articleEdit.children.length !== 0)){
-										self.relations = self.articleEdit.children;
-										for (var i = 0;i<self.articles.length;i++){
-											for(let j = 0;j<self.relations.length;j++){
-												if(self.relations[j].id === self.articles[i].id){
-													Vue.set(self.articles[i],'selected',true)
-													// self.articles[i].$set('selected',true);
-												}
+				for (let i = 0; i < self.articles.length; i++) {
+					Vue.set(self.articles[i],'selected',false)
+				}
+				self.getCategory().then((data)=>{
+					self.categorys = data.data;
+					if(self.$route.params.articleId){
+						let articleId = self.$route.params.articleId;
+						self.articleId = articleId;
+						api.article(articleId).get().then((data)=>{
+							data.json().then((data)=>{
+								self.articleEdit = data;
+								if(self.articleEdit.children && (self.articleEdit.children.length !== 0)){
+									self.relations = self.articleEdit.children;
+									for (var i = 0;i<self.articles.length;i++){
+										for(let j = 0;j<self.relations.length;j++){
+											if(self.relations[j].id === self.articles[i].id){
+												Vue.set(self.articles[i],'selected',true)
+												// self.articles[i].$set('selected',true);
 											}
-
 										}
-									}else {
-										self.relations = []
+
 									}
-								})
+								}else {
+									self.relations = []
+								}
 							})
-						}
-					})
+						})
+					}
+				})
 			})
-		},
-		canReuse:false
+		}
 	},
 	data(){
 		return {
+			articleId:null,
 			file:null,
 			articleEdit:{
 				title:'',
@@ -142,9 +147,17 @@ export default {
 		this.$file = this.$el.querySelector('.upload-img');
 	},
 	ready(){
+		wangEditor.config.printLog = false;
 		editor = new wangEditor('editor')
 		editor.config.customUploadInit = this.uploadInit;
 		editor.config.customUpload = true;
+
+		editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
+			if (item === 'source' || item === "location" || item === "video") {
+				return null;
+			}
+			return item;
+		});
 		editor.create();
 
 
@@ -177,6 +190,9 @@ export default {
 				}
 			});
 		},
+		deleteArticle(item){
+
+		},
 		saveEdit (){
 			this.articleEdit.children = this.relations;
 			this.articleEdit.content= editor.$txt.html();
@@ -188,30 +204,62 @@ export default {
 			})
 			var self = this;
 			if(this.$route.params.articleId){
-
 				api.article(this.$route.params.articleId).put(params).then((info)=>{
 					if (info.ok){
 						info.json().then((data)=>{
-							$('.upload-modal').modal('hide')
-							debugger;
-							if(data.success){
-								self.$route.router.go({path:'/article/list'})
+							if (data.code === 400) {
+								let message = self.printError(data.errors)
+								MessageBox({
+									message: message,
+									type: 'error'
+								})
+							}else if (data.error == 400){
+								MessageBox({
+									message: data.message,
+									type: 'error'
+								})
+							}else {
+								if(data.success){
+									$('.upload-modal').modal('hide')
+									self.$route.router.go({path:'/article/list'})
+								}
 							}
 						})
 					}
 				})
 			}else {
 				api.article.post(params).then((info)=>{
+					;
 					if (info.ok){
 						info.json().then((data)=>{
-							$('.upload-modal').modal('hide')
-							if(data.success){
-								self.$route.router.go({path:'/article/list'})
+							if (data.code === 400) {
+								let message = self.printError(data.errors)
+								MessageBox({
+									message: message,
+									type: 'error'
+								})
+							}else if (data.error == 400){
+								MessageBox({
+									message: data.message,
+									type: 'error'
+								})
+							}else {
+								if(data.success){
+									$('.upload-modal').modal('hide')
+									self.$route.router.go({path:'/article/list'})
+								}
 							}
 						})
 					}
 				})
 			}
+		},
+		printError(error){
+			let errorLog = "";
+			for (let i in error){
+				errorLog += i +':'+error[i][0] +'\n'
+			}
+			return errorLog
 		},
 		uploadImg(e){
 			let file = e.target.files[0];
@@ -229,7 +277,6 @@ export default {
 				api.upload.post(formData).then((info)=>{
 					if(info.ok){
 						info.json().then((info)=>{
-
 							self.articleEdit.cover_url = info.image_url;
 							self.file = null;
 							$('.upload-modal').modal('hide')
@@ -240,12 +287,13 @@ export default {
 
 			} else {
 				alert('文件格式只支持：jpg、jpeg 和 png');
-        this.file = null;
+				this.file = null;
 			}
 		},
 		uploadInit(){
 			var btnId = editor.customUploadBtnId;
 			var containerId = editor.customUploadContainerId;
+
 			var uploader = Qiniu.uploader({
 				runtimes:'html5',
 				browse_button:btnId,

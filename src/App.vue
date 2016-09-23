@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header-bar></header-bar>
+    <header-bar :is-login.sync="isLogin"></header-bar>
     <!-- <hello></hello> -->
 
     <router-view
@@ -18,6 +18,16 @@ export default {
   components: {
     HeaderBar
   },
+  data(){
+    return {
+      isLogin:false
+    }
+  },
+  events:{
+    'login_down':function(){
+      this.isLogin = true
+    }
+  }
 
 }
 </script>

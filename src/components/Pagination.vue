@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import MessageBox from "vue-msgbox"
 export default {
   name:'Pagination',
   data() {
@@ -32,21 +33,27 @@ export default {
   },
   attached: function () {},
   methods: {
-     pre(){
-       if(this.offset === 1){
-         alert('已经是第一页了！')
-       }else {
-         this.offset--
-       }
-     },
-     next(){
-       debugger;
-       if(this.offset === this.totalPage){
-         alert('已经是最后一页了！')
-       }else {
-         this.offset++
-       }
-     }
+    pre(){
+      if(this.offset === 1){
+        MessageBox({
+          message: "已经是第一页了",
+          type: 'error'
+        })
+      }else {
+        this.offset--
+      }
+    },
+    next(){
+      ;
+      if(this.offset === this.totalPage){
+        MessageBox({
+          message: "已经是最后一页了",
+          type: 'error'
+        })
+      }else {
+        this.offset++
+      }
+    }
   },
   components: {}
 }

@@ -1,5 +1,8 @@
 <template lang="html">
   <div class="container">
+    <header>
+      <h4>COMMODITY LIST</h4>
+    </header>
     <table class="table">
       <thead>
         <tr>
@@ -94,6 +97,6 @@ export default {
 <style>
 @import '../../node_modules/vue-msgbox/lib/vue-msgbox.css';
 .msgbox {
-  width: 20%
+  width: 25%
 }
 </style>

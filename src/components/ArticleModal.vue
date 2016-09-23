@@ -4,34 +4,33 @@
       <div class="modal-content">
         <!-- <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-        </button>
-        <h4 class="modal-title">选择关联文章</h4>
-        </div> -->
-        <div class="modal-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>title</th>
-                <th>options</th>
-              </tr>
-            </thead>
-            <tbody>
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+      </button>
+      <h4 class="modal-title">选择关联文章</h4>
+    </div> -->
+    <div class="modal-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>title</th>
+            <th>relation</th>
+          </tr>
+        </thead>
+        <tbody>
 
-              <tr v-for="item in articles">
-                <td v-text="item.title"></td>
-                <td>
-                  {{item.selected}}
-                  <input type="checkbox" v-model="item.selected" @click="alocked(item)">
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+          <tr v-for="item in articles" v-if="item.id != articleId">
+            <td v-text="item.title" ></td>
+            <td>
+              <input type="checkbox" v-model="item.selected" @click="alocked(item)">
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
+</div>
 </template>
 
 <script>
@@ -42,7 +41,7 @@ export default {
 
     }
   },
-  props:['articles','relations'],
+  props:['articles','relations','articleId'],
   computed: {},
   ready(){
   },
@@ -51,7 +50,6 @@ export default {
       $('.modal-article').modal('show')
     },
     alocked(item){
-      debugger;
       item.selected=!item.selected;
       if(item.selected){
         this.relations.push({id:item.id,title:item.title});

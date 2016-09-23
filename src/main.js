@@ -10,8 +10,10 @@ import CommodityList from './components/commodityList'
 import CommodityEdit from './components/commodityEdit'
 import 'whatwg-fetch'
 import fetchIntercept from 'fetch-intercept'
+import Element from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 Vue.use(Router)
-
+Vue.use(Element)
 var router = new Router()
 
 router.map({
@@ -56,15 +58,22 @@ router.beforeEach(function () {
 router.start(App, 'app')
 
 const getAuthHeader = (url, method,access_token,mac_key,nonce)=>{
-  debugger;
+  ;
   var strAuth = "MAC id=\"" + access_token + "\",nonce=\"";
   strAuth += nonce + "\",mac=\"";
   var i = url.indexOf('/',7);
-  var host = "0.0.0.0:8000";
-  // var path = url.substring(i);
-  //
-  // path=path.replace("/"+host,"");
-  var path = "/commodity"
+  if(/uc/.test(url)){
+    var host = "ucbetapi.101.com"
+  }else {
+    var host = "0.0.0.0:8000";
+  }
+
+  var path = url.substring(i);
+
+  path=path.replace("/"+host,"");
+  if (!/uc/.test(url)) {
+    path=path.replace(/\?.*/,"");
+  }
   var request_content = nonce + '\n' + method + '\n' + path + '\n' +host+'\n';
   var hash = CryptoJS.HmacSHA256(request_content, mac_key);
   var mac = hash.toString(CryptoJS.enc.Base64);strAuth += mac+"\"";
@@ -93,9 +102,6 @@ const getCookie =(objname)=>{//获取指定名称的cookie的值
 const unregister = fetchIntercept.register({
   request: function (url, config) {
     // Modify the url or config here
-    var host = '180.76.132.102:19991';
-    debugger;
-
     var authCookie = getCookie('login_access')
     if(authCookie == undefined){
       router.go('/login')
@@ -103,11 +109,9 @@ const unregister = fetchIntercept.register({
       // config.headers['Authorization'] =
       var uc_arr=authCookie.split("$$");
       var stimes = uc_arr[4];
-      debugger;
       var timestamp=new Date().getTime()+parseInt(stimes)
       var nonce=timestamp+":"+generateMixed(8);
       var access_token=uc_arr[0];
-      debugger;
       var mac_key=uc_arr[2];
       var header = getAuthHeader(url, config.method,access_token,mac_key,nonce)
       if(config.headers){
@@ -127,7 +131,9 @@ const unregister = fetchIntercept.register({
   },
 
   response: function (response) {
-    debugger;
+    if(response.status === 401){
+      router.go('/login')
+    }
     // Modify the reponse object
     return response;
   },

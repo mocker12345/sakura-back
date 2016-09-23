@@ -4,6 +4,7 @@ var api = new webRest([
   'GET /article/:articleId',
   'POST /article',
   'PUT /article/:id',
+  'DELETE /article/:id',
   'GET /category',
   'GET /category/:categoryId/articles',
   'POST /category',
@@ -11,7 +12,10 @@ var api = new webRest([
   'DELETE /category/:categoryId',
   'POST /login',
   'GET /commodity',
-  'DELETE /commodity/:id'
+  'DELETE /commodity/:id',
+  'POST /commodity',
+  'PUT /commodity/:id',
+  'GET /commodity/:id'
 ],{
   host:'http://0.0.0.0:8000/',
   // host:'http://180.76.132.102:19991/',

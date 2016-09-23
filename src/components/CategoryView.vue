@@ -1,5 +1,8 @@
 <template lang="html">
   <div class="container">
+    <header>
+      <h4>CATEGORY LIST</h4>
+    </header>
     <table class="table">
       <thead>
         <tr>
@@ -28,6 +31,7 @@
 </template>
 
 <script>
+import MessageBox from "vue-msgbox"
 export default {
   data() {
     return {
@@ -63,10 +67,17 @@ export default {
           if(info.ok){
             info.json().then((data)=>{
               if (data.success) {
-                this.categorys = data.data;
-                alert('success')
+                MessageBox({
+                  message: "save success",
+                  type: 'success',
+                }).then((action)=>{
+                  this.categorys = data.data;
+                })
               }else {
-                console.log(data.message)
+                MessageBox({
+                  message: data.message,
+                  type: 'error',
+                })
               }
             })
           }else {
@@ -80,29 +91,41 @@ export default {
           if(info.ok){
             info.json().then((data)=>{
               if (data.success) {
-                this.categorys = data.data;
-                alert('success')
+                MessageBox({
+                  message: "save success",
+                  type: 'success',
+                }).then((action)=>{
+                  this.categorys = data.data;
+                })
               }else {
-                console.log(data.message)
+                MessageBox({
+                  message: data.message,
+                  type: 'error',
+                })
               }
             })
-          }else {
-            console.log(info);
           }
         })
       }
 
     },
     deleteCategory(cate,index){
-      debugger;
       if(cate.id){
         api.category(cate.id).delete().then((info)=>{
           if(info.ok){
             info.json().then((data)=>{
               if(data.success){
-                this.categorys = data.data;
+                MessageBox({
+                  message: "Delete success",
+                  type: 'error',
+                }).then((action)=>{
+                  this.categorys = data.data;
+                })
               }else {
-                console.console.log(data.message);
+                MessageBox({
+                  message: "Delete field",
+                  type: 'error',
+                })
               }
             })
           }

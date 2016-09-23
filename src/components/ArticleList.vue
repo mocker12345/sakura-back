@@ -29,6 +29,7 @@
 				<td v-text="article.create_time"></td>
 				<td>
 					<a class="btn btn-primary" v-link="{path:'/article/edit/'+article.id}">edit</a>
+					<a class="btn btn-warning" @click="deleteArticle(article)">delete</a>
 				</td>
 			</tr>
 		</tbody>
@@ -41,6 +42,7 @@
 </template>
 <script>
 import Pagination from './Pagination'
+import MessageBox from 'vue-msgbox'
 export default {
 	name:'ArticleList',
 	data(){
@@ -83,6 +85,23 @@ export default {
 					}
 				})
 			}
+		},
+		deleteArticle(item){
+			api.article(item.id).delete().then((info)=>{
+				if(info.ok){
+					info.json().then((data)=>{
+						if(data.success){
+							MessageBox({
+								message:"delete success",
+								type:"success"
+							}).then((action)=>{
+								this.loadArticlesByCategory()
+							})
+
+						}
+					})
+				}
+			})
 		},
 		getAllArticles(){
 			return api.article.get({limit:this.limit,offset:this.offset}).then((data)=>{

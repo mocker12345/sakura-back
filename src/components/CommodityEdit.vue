@@ -11,12 +11,12 @@
         </fieldset>
         <fieldset class="form-group">
           <label class="label">Summary</label>
-          <textarea rows="6" cols="40" class="form-control" v-model="commodity.summery"></textarea>
+          <textarea rows="6" cols="40" class="form-control" v-model="commodity.summary"></textarea>
         </fieldset>
         <fieldset class="form-group">
           <label class="label">Cover Image</label>
           <img :src="commodity.cover_url" alt="" style="height:100px;"/>
-  				<label class="btn btn-primary"><input class="upload-img" type="file" hidden @change="uploadImg($event)">upload image</label>
+          <label class="btn btn-primary"><input class="upload-img" type="file" hidden @change="uploadImg($event)">upload image</label>
 
         </fieldset>
         <div class="modal upload-modal fade" role="dialog">
@@ -37,7 +37,7 @@
           <input type="text" class="form-control" v-model="commodity.buy_url">
         </fieldset>
         <fieldset>
-          <button type="button" name="button" class="btn btn-primary offset-md-1">Submit</button>
+          <button type="button" name="button" @click="saveEdit"class="btn btn-primary offset-md-1">Submit</button>
         </fieldset>
       </form>
     </div>
@@ -51,7 +51,7 @@ export default {
       file:null,
       commodity:{
         title:null,
-        summery:null,
+        summary:null,
         cover_url:null,
         price:null,
         buy_url:null
@@ -59,37 +59,93 @@ export default {
     };
   },
   computed: {},
-  ready() {},
+  ready() {
+    this.loadCommodity()
+  },
   attached() {},
   methods: {
-    uploadImg(e){
-			let file = e.target.files[0];
-			let supportedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-			if (file && supportedTypes.indexOf(file.type) >= 0) {
-				this.file = file;
-				let self = this;
-				let formData = new FormData();
-				formData.append('file',this.file);
-        $('.upload-modal').modal('show').css({
-  				"margin-top": function () {
-  					return ($(this).height() / 2);
-  				}
-  			})
-				api.upload.post(formData).then((info)=>{
-					if(info.ok){
-						info.json().then((info)=>{
+    loadCommodity(){
+      if(this.$route.params.id){
+        let id = this.$route.params.id;
+        api.commodity(id).get().then((info)=>{
+          if (info.ok) {
+            info.json().then((data)=>{
+              if(data.message){
+                alert(data.message)
+                this.route.router.go('/commodity')
+              }else {
+                ;
+                this.commodity = data
+              }
+            })
+          }
+        })
+      }
+    },
+    saveEdit(){
+      var params = JSON.stringify(this.commodity)
+      $('.upload-modal').modal('show').css({
+        "margin-top": function () {
+          return ($(this).height() / 2);
+        }
+      })
+      if(this.$route.params.id){
+        let id = this.$route.params.id;
+        api.commodity(id).put(params).then((info)=>{
+          if (info.ok) {
+            info.json().then((data)=>{
               $('.upload-modal').modal('hide')
-							self.commodity.cover_url = info.image_url;
-							self.file = null;
-						})
-					}
-				});
+              if(data.success){
+                this.$route.router.go('/commodity')
+              }else {
+                alert(data.message)
+              }
+            })
+          }
+        })
+      }else {
+        api.commodity.post(params).then((info)=>{
+          if(info.ok){
+            info.json().then((data)=>{
+              $('.upload-modal').modal('hide')
+              if (data.success) {
+                this.$route.router.go('/commodity')
+              }else {
+                alert(data.message)
+              }
+            })
+          }
+        })
+      }
+    },
+    uploadImg(e){
+      let file = e.target.files[0];
+      let supportedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+      if (file && supportedTypes.indexOf(file.type) >= 0) {
+        this.file = file;
+        let self = this;
+        let formData = new FormData();
+        formData.append('file',this.file);
+        $('.upload-modal').modal('show').css({
+          "margin-top": function () {
+            return ($(this).height() / 2);
+          }
+        })
+        api.upload.post(formData).then((info)=>{
+          if(info.ok){
+            info.json().then((info)=>{
+              $('.upload-modal').modal('hide')
+              self.commodity.cover_url = info.image_url;
+              self.file = null;
+            })
+          }
+        });
 
-			} else {
-				alert('文件格式只支持：jpg、jpeg 和 png');
+      } else {
+        alert('文件格式只支持：jpg、jpeg 和 png');
         this.file = null;
-			}
-		}
+      }
+    }
   },
   components: {}
 };
@@ -101,7 +157,7 @@ header {
   margin-bottom: 20px
 }
 .label {
-	width: 20%;
+  width: 20%;
   font-size: 18px
 }
 </style>
