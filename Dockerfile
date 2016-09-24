@@ -19,4 +19,4 @@ RUN npm run build
 
 RUN cp -R /app/dist/*  /usr/share/nginx/html
 
-CMD /app/docker-entrypoint.sh
+CMD ["nginx", "-g", "daemon off;"] 
