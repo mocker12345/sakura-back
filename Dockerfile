@@ -1,7 +1,7 @@
 FROM node
 
 
-RUN  apt-get update && apt-get install -y apt-transport-https && apt-get install nginx
+RUN  apt-get update && apt-get install -y apt-transport-https && apt-get -y install nginx
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
