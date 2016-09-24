@@ -14,9 +14,9 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<label class="label">Category</label>
-				<select class="form-control" v-model="articleEdit.category">
+				<select class="form-control" v-model="articleEdit.category" v-bind:disabled=isReadOnly>
 					<option value="0">其他</option>
-					<option v-for="option in categorys" v-model="option.id">{{option.name}}</option>
+					<option v-for="option in categorys" :value="option.id">{{option.name}}</option>
 				</select>
 			</fieldset>
 			<fieldset class="form-group">
@@ -99,6 +99,7 @@ export default {
 					self.categorys = data.data;
 					if(self.$route.params.articleId){
 						let articleId = self.$route.params.articleId;
+						self.isReadOnly = true
 						self.articleId = articleId;
 						api.article(articleId).get().then((data)=>{
 							data.json().then((data)=>{
@@ -139,7 +140,8 @@ export default {
 			},
 			categorys:[],
 			articles:null,
-			relations:[]
+			relations:[],
+			isReadOnly:false
 		}
 	},
 
