@@ -6,7 +6,7 @@ MAINTAINER Rancongjie "rancongjie@126.com"
 
 ENV NGINX_VERSION 1.7.12-1~wheezy
 
-RUN apt-get install -y nginx
+RUN apt-get install -y -qq nginx
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
