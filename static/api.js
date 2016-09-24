@@ -17,8 +17,8 @@ var api = new webRest([
   'PUT /commodity/:id',
   'GET /commodity/:id'
 ],{
-  host:'http://0.0.0.0:8000/',
-  // host:'http://180.76.132.102:19991/',
+  // host:'http://0.0.0.0:8000/',
+  host:'http://180.76.132.102:19991/',
   promise:Promise,
   http:function(request){
     if (request.method === 'GET' && request.data) {
