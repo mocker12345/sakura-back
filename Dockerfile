@@ -11,7 +11,6 @@ EXPOSE 80
 WORKDIR /app
 
 COPY ./package.json /app/
-COPY ./bower.json /app/
 RUN npm install
 
 COPY . /app/
