@@ -17,6 +17,6 @@ COPY . /app/
 
 RUN npm run build
 
-RUN cp -R /app/dist/*  /usr/share/nginx/html
+RUN cp -R /app/dist/*  /var/www/html
 
-CMD ["nginx", "-g", "daemon off;"] 
+CMD ["nginx", "-g", "daemon off;"]
