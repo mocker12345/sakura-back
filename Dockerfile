@@ -6,8 +6,7 @@ RUN echo "deb http://nginx.org/packages/mainline/debian/ wheezy nginx" >> /etc/a
 
 ENV NGINX_VERSION 1.7.12-1~wheezy
 
-RUN apt-get update && \
-    apt-get install nginx
+RUN apt-get install nginx
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
