@@ -16,7 +16,7 @@
 				<label class="label">Category</label>
 				<select class="form-control" v-model="articleEdit.category">
 					<option value="0">其他</option>
-					<option v-for="option in categorys" v-bind:value="option.id">{{option.name}}</option>
+					<option v-for="option in categorys" v-model="option.id">{{option.name}}</option>
 				</select>
 			</fieldset>
 			<fieldset class="form-group">
@@ -229,7 +229,7 @@ export default {
 				})
 			}else {
 				api.article.post(params).then((info)=>{
-					
+
 					if (info.ok){
 						info.json().then((data)=>{
 							if (data.code === 400) {
