@@ -1,12 +1,12 @@
-FROM node:0.12.7-wheezy
+FROM daocloud.io/node:0.10.28
 
 MAINTAINER Rancongjie "rancongjie@126.com"
 
-RUN echo "deb http://nginx.org/packages/mainline/debian/ wheezy nginx" >> /etc/apt/sources.list
+
 
 ENV NGINX_VERSION 1.7.12-1~wheezy
 
-RUN apt-get install nginx
+RUN apt-get install -y nginx
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
