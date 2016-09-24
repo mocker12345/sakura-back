@@ -1,10 +1,5 @@
-FROM daocloud.io/node:0.10.28
+FROM node
 
-MAINTAINER Rancongjie "rancongjie@126.com"
-
-RUN echo "deb http://nginx.org/packages/mainline/debian/wheezy/nginx" >> /etc/apt/sources.list
-
-ENV NGINX_VERSION 1.7.12-1~wheezy
 
 RUN apt-get update && apt-get install nginx
 
