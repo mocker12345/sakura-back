@@ -7,15 +7,12 @@ RUN echo "deb http://nginx.org/packages/mainline/debian/ wheezy nginx" >> /etc/a
 ENV NGINX_VERSION 1.7.12-1~wheezy
 
 RUN apt-get update && \
-    apt-get install -y ca-certificates nginx && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install nginx
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 80
-
-RUN npm install -g bower gulp
 
 WORKDIR /app
 
