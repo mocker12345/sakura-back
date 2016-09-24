@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import MessageBox from "vue-msgbox"
 export default {
   data() {
     return {
@@ -74,7 +75,6 @@ export default {
                 alert(data.message)
                 this.route.router.go('/commodity')
               }else {
-                ;
                 this.commodity = data
               }
             })
@@ -84,21 +84,32 @@ export default {
     },
     saveEdit(){
       var params = JSON.stringify(this.commodity)
-      $('.upload-modal').modal('show').css({
-        "margin-top": function () {
-          return ($(this).height() / 2);
-        }
-      })
       if(this.$route.params.id){
         let id = this.$route.params.id;
         api.commodity(id).put(params).then((info)=>{
           if (info.ok) {
             info.json().then((data)=>{
-              $('.upload-modal').modal('hide')
-              if(data.success){
-                this.$route.router.go('/commodity')
-              }else {
-                alert(data.message)
+              if (data.code === 400){
+                let message = this.printError(data.errors)
+                MessageBox({
+                  message:message,
+                  type:'error'
+                })
+              }else if(data.error == 400){
+                MessageBox({
+                  message: data.message,
+                  type: 'error'
+                })
+              }else{
+                if(data.success){
+                  MessageBox({
+                    message: 'save success',
+                    type: 'success'
+                  }).then((action)=>{
+                    this.$route.router.go('/commodity')
+                  })
+
+                }
               }
             })
           }
@@ -107,17 +118,40 @@ export default {
         api.commodity.post(params).then((info)=>{
           if(info.ok){
             info.json().then((data)=>{
-              $('.upload-modal').modal('hide')
-              if (data.success) {
-                this.$route.router.go('/commodity')
-              }else {
-                alert(data.message)
+              if (data.code === 400){
+                let message = this.printError(data.errors)
+                MessageBox({
+                  message:message,
+                  type:'error'
+                })
+              }else if(data.error == 400){
+                MessageBox({
+                  message: data.message,
+                  type: 'error'
+                })
+              }else{
+                if(data.success){
+                  MessageBox({
+                    message: 'save success',
+                    type: 'success'
+                  }).then((action)=>{
+                    this.$route.router.go('/commodity')
+                  })
+
+                }
               }
             })
           }
         })
       }
     },
+    printError(error){
+			let errorLog = "";
+			for (let i in error){
+				errorLog += i +':'+error[i][0] +'\n'
+			}
+			return errorLog
+		},
     uploadImg(e){
       let file = e.target.files[0];
       let supportedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
