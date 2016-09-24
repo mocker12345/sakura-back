@@ -1,5 +1,6 @@
 FROM node
 
+MAINTAINER Rancongjie "rancongjie@126.com"
 
 RUN  apt-get update && apt-get install -y apt-transport-https && apt-get -y install nginx
 

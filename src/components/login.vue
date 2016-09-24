@@ -65,8 +65,8 @@ export default {
               let stimes=new Date(data.server_time).valueOf()-timestamp
               let cookieVal = data.access_token+"$$"+data.refresh_token+"$$"+
               data.mac_key+"$$"+data.user_id+"$$"+stimes;
-              this.setCookie('login_access',cookieVal,0.5)
-              this.setCookie('user_id',data.user_id,0.5)
+              this.setCookie('login_access',cookieVal,60)
+              this.setCookie('user_id',data.user_id,60)
               MessageBox({
                 message: "login success",
                 type: 'success',
