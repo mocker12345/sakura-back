@@ -10,10 +10,7 @@ import CommodityList from './components/CommodityList.vue'
 import CommodityEdit from './components/CommodityEdit.vue'
 import 'whatwg-fetch'
 import fetchIntercept from 'fetch-intercept'
-import Element from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
 Vue.use(Router)
-Vue.use(Element)
 var router = new Router()
 
 router.map({
