@@ -300,7 +300,7 @@ export default {
 				runtimes:'html5',
 				browse_button:btnId,
 				uptoken_url:'http:///180.76.132.102:19991/uptoken/',
-				domain:'http://oce6f0hwv.bkt.clouddn.com/',
+				domain:'http://oe548x17y.qnssl.com/',
 				container:containerId,
 				max_file_size:'20mb',
 				filters:{
