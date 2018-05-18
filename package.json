@@ -13,7 +13,7 @@
     "babel-runtime": "^6.0.0",
     "element-ui": "^1.0.0-rc.4",
     "fetch-intercept": "^2.2.1",
-    "qiniu": "^6.1.11",
+    "qiniu": "^7.1.6",
     "qiniu-js": "^1.0.14-beta",
     "vc-modal": "^0.0.2",
     "vue": "^1.0.21",
