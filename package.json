@@ -16,7 +16,7 @@
     "qiniu": "^6.1.11",
     "qiniu-js": "^1.0.14-beta",
     "vc-modal": "^0.0.2",
-    "vue": "^1.0.21",
+    "vue": "^2.5.17",
     "vue-bootstrap-modal": "^0.1.13",
     "vue-msgbox": "^0.2.11",
     "vue-router": "^0.7.13",
